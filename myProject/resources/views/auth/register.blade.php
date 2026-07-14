@@ -8,6 +8,7 @@
         @fonts
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 
@@ -46,6 +47,7 @@
                 color: #fff;
                 padding: 2rem 2rem 1.5rem;
                 text-align: center;
+                position: relative;   /* idagdag ito */
             }
 
             .auth-icon {
@@ -138,6 +140,9 @@
                     <div class="auth-card">
 
                         <div class="auth-header">
+                            <a href="{{ url('/') }}" style="position:absolute; top:1rem; left:1rem; width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.3); color:#fff; display:inline-flex; align-items:center; justify-content:center; text-decoration:none;">
+                                <i class="bi bi-arrow-left"></i>
+                            </a>
                             <span class="auth-icon">
                                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12 3L2 8L12 13L20 9.09V15H22V8L12 3Z" fill="#ffffff"/>
