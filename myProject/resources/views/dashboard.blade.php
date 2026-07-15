@@ -18,7 +18,7 @@
                 <div class="flex justify-between items-center mb-6">
                     <div>
                         <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                            Registered Student Records
+                            Registered Student Records.....
                         </h3>
                         <p class="text-xs text-gray-500 dark:text-gray-400">Manage and view your active class roster.</p>
                     </div>
