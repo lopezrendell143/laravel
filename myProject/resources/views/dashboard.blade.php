@@ -220,7 +220,7 @@
                     </button>
                 </div>
 
-                <form :action="'{{ route('students.update', '') }}' + '/' + activeStudent.id" method="POST" class="space-y-4">
+                <form :action="'{{ route('students.update', 'TEMP_ID') }}'.replace('TEMP_ID', activeStudent.id)" method="POST" class="space-y-4">
                     @csrf
                     @method('PUT')
                     
