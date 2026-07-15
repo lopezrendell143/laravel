@@ -5,7 +5,6 @@
         </h2>
     </x-slot>
 
-    <!-- Added openEditModal to x-data -->
     <div class="py-12" x-data="{ openAddModal: false, openViewModal: false, openEditModal: false, activeStudent: {} }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
@@ -48,7 +47,6 @@
                                     <td class="px-6 py-4 whitespace-nowrap font-medium text-sm">{{ $student->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <div class="inline-flex items-center space-x-2">
-                                            <!-- View Button -->
                                             <button 
                                                 @click="activeStudent = {{ json_encode($student) }}; openViewModal = true" 
                                                 type="button" 
@@ -61,7 +59,6 @@
                                                 View Info
                                             </button>
 
-                                            <!-- Edit Button (Now opens modal instead of redirecting) -->
                                             <button 
                                                 @click="activeStudent = {{ json_encode($student) }}; openEditModal = true" 
                                                 type="button"
@@ -73,7 +70,6 @@
                                                 Edit
                                             </button>
 
-                                            <!-- Delete Button -->
                                             <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student record?');">
                                                 @csrf
                                                 @method('DELETE')
@@ -99,7 +95,6 @@
 
         </div>
 
-        <!-- ADD MODAL -->
         <div x-show="openAddModal" 
              class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto" 
              style="display: none;"
@@ -193,7 +188,6 @@
             </div>
         </div>
 
-        <!-- EDIT MODAL -->
         <div x-show="openEditModal" 
              class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto" 
              style="display: none;"
@@ -226,8 +220,7 @@
                     </button>
                 </div>
 
-                <!-- Uses Alpine x-bind to build the dynamic route based on activeStudent ID -->
-                <form x-bind:action=" '{{ route('students.index') }}/' + activeStudent.id " method="POST" class="space-y-4">
+                <form x-bind:action="'{{ route('students.index') }}/' + activeStudent.id" method="POST" class="space-y-4">
                     @csrf
                     @method('PUT')
                     
@@ -289,7 +282,6 @@
             </div>
         </div>
 
-        <!-- VIEW MODAL -->
         <div x-show="openViewModal" 
              class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto" 
              style="display: none;"
