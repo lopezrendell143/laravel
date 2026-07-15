@@ -238,15 +238,15 @@
                     </div>
 
                     <div class="sm:col-span-2">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Physical Address</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-gray-400"> Address</span>
                         <p class="text-sm text-gray-900 dark:text-gray-100 mt-0.5" x-text="activeStudent.address"></p>
                     </div>
                 </div>
 
                 <div class="mt-8 flex justify-end border-t border-gray-200 dark:border-gray-700 pt-4">
-                    <button type="button" @click="openViewModal = false" class="px-5 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md transition-colors shadow-sm">
+                    <x-danger-button type="button" @click="openViewModal = false" class="px-5 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md transition-colors shadow-sm">
                         Close Profile
-                    </button>
+                    </x-danger-button>
                 </div>
             </div>
         </div>
