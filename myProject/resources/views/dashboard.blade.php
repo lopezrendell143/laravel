@@ -147,7 +147,7 @@
                         </div>
 
                         <div class="sm:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Address NG BAHAY</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Address</label>
                             <textarea name="address" rows="2" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300 border dark:border-gray-600"></textarea>
                         </div>
                     </div>
