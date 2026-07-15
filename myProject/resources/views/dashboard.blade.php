@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12" x-data="{ openAddModal: false, openViewModal: false, activeStudent: {} }">
+    <div class="py-12" x-data="{ openAddModal: false, openViewModal: false, openEditModal: false, activeStudent: {} }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
             @if(session('success'))
@@ -59,15 +59,16 @@
                                                 View Info
                                             </button>
 
-                                            <a 
-                                                href="{{ route('students.edit', $student->id) }}" 
+                                            <button 
+                                                @click="activeStudent = {{ json_encode($student) }}; openEditModal = true"
+                                                type="button"
                                                 class="inline-flex items-center px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 rounded-md transition-colors"
                                             >
                                                 <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                                 </svg>
                                                 Edit
-                                            </a>
+                                            </button>
 
                                             <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student record?');">
                                                 @csrf
@@ -181,6 +182,100 @@
                         </button>
                         <x-primary-button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
                             Save Student
+                        </x-primary-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div x-show="openEditModal" 
+             class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto" 
+             style="display: none;"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0">
+            
+            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 dark:bg-opacity-80" @click="openEditModal = false"></div>
+
+            <div x-show="openEditModal"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                 class="relative w-full max-w-xl p-6 overflow-hidden bg-white dark:bg-gray-800 shadow-xl rounded-lg z-10 transition-all">
+                
+                <div class="flex justify-between items-center mb-4 border-b border-gray-200 dark:border-gray-700 pb-3">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                        Edit Student Record
+                    </h3>
+                    <button @click="openEditModal = false" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <form :action="'{{ route('students.update', '') }}' + '/' + activeStudent.id" method="POST" class="space-y-4">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
+                            <input type="text" name="name" x-model="activeStudent.name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300 border dark:border-gray-600">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Gender</label>
+                            <select name="gender" x-model="activeStudent.gender" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300 border dark:border-gray-600">
+                                <option value="" disabled>Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Age</label>
+                            <input type="number" name="age" x-model="activeStudent.age" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300 border dark:border-gray-600">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Date of Birth</label>
+                            <input type="date" name="date_of_birth" x-model="activeStudent.date_of_birth" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300 border dark:border-gray-600">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Phone Number</label>
+                            <input type="text" name="phone_number" x-model="activeStudent.phone_number" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300 border dark:border-gray-600">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Gmail Address</label>
+                            <input type="email" name="email" x-model="activeStudent.email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300 border dark:border-gray-600">
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Guardian Name</label>
+                            <input type="text" name="guardian" x-model="activeStudent.guardian" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300 border dark:border-gray-600">
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Address</label>
+                            <textarea name="address" rows="2" x-model="activeStudent.address" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300 border dark:border-gray-600"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex justify-end space-x-3 border-t border-gray-200 dark:border-gray-700 pt-4">
+                        <button type="button" @click="openEditModal = false" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600">
+                            Cancel
+                        </button>
+                        <x-primary-button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
+                            Update Student
                         </x-primary-button>
                     </div>
                 </form>
