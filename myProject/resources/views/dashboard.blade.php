@@ -32,21 +32,21 @@
                 </div>
                 
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-900">
+                    <table class="w-full border-2 border-slate-600 border-collapse">
+                        <thead class="bg-slate-100 dark:bg-gray-900">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider w-24">ID</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Name</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider w-72">Actions</th>
+                                <th class="px-5 py-4 border border-slate-400 text-left text-sm font-bold text-slate-700 dark:text-gray-300">ID</th>
+                                <th class="px-5 py-4 border border-slate-400 text-left text-sm font-bold text-slate-700 dark:text-gray-300">Name</th>
+                                <th class="px-5 py-4 border border-slate-400 text-center text-sm font-bold text-slate-700 dark:text-gray-300">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700 text-gray-900 dark:text-gray-100">
+                        <tbody class="bg-slate-50 dark:bg-gray-800">
                             @forelse($students as $student)
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-500 dark:text-gray-400">{{ $student->id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap font-medium text-sm">{{ $student->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <div class="inline-flex items-center space-x-2">
+                                <tr class="border-b border-dashed border-slate-300 hover:bg-slate-100 dark:hover:bg-gray-700">
+                                    <td class="px-4 py-6 border-l text-center border-r border-slate-400 text-sm font-mono text-slate-600 dark:text-gray-400">{{ $student->id }}</td>
+                                    <td class="px-4 py-6 border-r text-center border-slate-400 font-medium text-sm text-slate-700 dark:text-gray-100">{{ $student->name }}</td>
+                                    <td class="px-4 py-6 border-r border-slate-400 text-center text-sm font-medium">
+                                        <div class="flex items-center justify-center gap-4">
                                             <button 
                                                 @click="activeStudent = {{ json_encode($student) }}; openViewModal = true" 
                                                 type="button" 
@@ -85,15 +85,12 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">No students registered yet.</td>
+                                    <td colspan="3" class="px-6 py-4 border border-slate-400 text-center text-sm text-gray-500 dark:text-gray-400">No students registered yet.</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-        </div>
 
         <div x-show="openAddModal" 
              class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto" 
